@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public PlayerInputActions playerInputs {  get; private set; }
     public PlayerInputActions.PlayerActions playerActions { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
-        playerInputs = GetComponent<PlayerInputActions>();
+        playerInputs = new PlayerInputActions();
         playerActions = playerInputs.Player;
     }
 

@@ -1,13 +1,6 @@
-public interface IState
-{
-    void Enter();
-    void Exit();
-    void Update();
-    void PhysicsUpdate();
-    void HandleInput();
-}
+using System.Diagnostics;
 
-public abstract class StateMachine
+public class StateMachine
 {
     protected IState curState;
 
@@ -18,9 +11,9 @@ public abstract class StateMachine
         curState?.Enter();
     }
 
-    public void HabndleInput()
+    public void HandleInput()
     {
-        curState?.Update();
+        curState?.HandleInput();
     }
 
     public void Update()
