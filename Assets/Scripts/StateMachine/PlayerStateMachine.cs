@@ -16,6 +16,9 @@ public class PlayerStateMachine : StateMachine
     public WalkState WalkState { get; private set; }
     public RunState RunState { get; private set; }
 
+    public JumpState JumpState { get; private set; }
+    public FallState FallState { get; private set; }
+
     public PlayerStateMachine(Player player)
     {
         Player = player;
@@ -28,5 +31,8 @@ public class PlayerStateMachine : StateMachine
         IdleState = new IdleState(this);
         WalkState = new WalkState(this);
         RunState = new RunState(this);
+
+        JumpState = new JumpState(this);
+        FallState = new FallState(this);
     }
 }

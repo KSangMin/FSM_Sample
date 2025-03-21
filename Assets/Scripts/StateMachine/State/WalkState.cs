@@ -9,15 +9,11 @@ public class WalkState : GroundState
 
     public override void Enter()
     {
+        stateMachine.MovementSpeedModifier = groundData.WalkSpeedModifier;
+        
         base.Enter();
 
-        stateMachine.MovementSpeedModifier = groundData.WalkSpeedModifier;
         StartAnimation(stateMachine.Player.animationData.WalkParameterHash);
-
-        if (stateMachine.Player.animator.GetBool(stateMachine.Player.animationData.RunParameterHash) == true)
-        {
-            stateMachine.ChangeState(stateMachine.RunState);
-        }
     }
 
     public override void Exit()

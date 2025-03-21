@@ -36,18 +36,4 @@ public class IdleState : GroundState
             stateMachine.ChangeState(stateMachine.WalkState);
         }
     }
-
-    protected override void OnRunStarted(InputAction.CallbackContext context)
-    {
-        base.OnRunStarted(context);
-
-        stateMachine.Player.animator.SetBool(stateMachine.Player.animationData.RunParameterHash, true);
-    }
-
-    protected override void OnRunCanceled(InputAction.CallbackContext context)
-    {
-        base.OnRunCanceled(context);
-
-        stateMachine.Player.animator.SetBool(stateMachine.Player.animationData.RunParameterHash, false);
-    }
 }

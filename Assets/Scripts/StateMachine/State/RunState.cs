@@ -9,9 +9,10 @@ public class RunState : GroundState
 
     public override void Enter()
     {
+        stateMachine.MovementSpeedModifier = groundData.RunSpeedModifier;
+        
         base.Enter();
 
-        stateMachine.MovementSpeedModifier = groundData.RunSpeedModifier;
         StartAnimation(stateMachine.Player.animationData.RunParameterHash);
     }
 

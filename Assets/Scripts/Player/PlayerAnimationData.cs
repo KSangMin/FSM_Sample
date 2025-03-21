@@ -35,7 +35,7 @@ public class PlayerAnimationData
         WalkParameterHash = Animator.StringToHash(walkParameterName);
         RunParameterHash = Animator.StringToHash(runParameterName);
 
-        AirParameterHash = Animator.StringToHash(fallParameterName);
+        AirParameterHash = Animator.StringToHash(airParameterName);
         JumpParameterHash = Animator.StringToHash(jumpParameterName);
         FallParameterHash = Animator.StringToHash(fallParameterName);
 
