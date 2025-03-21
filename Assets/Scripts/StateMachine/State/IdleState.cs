@@ -9,9 +9,10 @@ public class IdleState : GroundState
 
     public override void Enter()
     {
+        stateMachine.MovementSpeedModifier = 0;
+
         base.Enter();
 
-        stateMachine.MovementSpeedModifier = 0;
         StartAnimation(stateMachine.Player.animationData.IdleParameterHash);
     }
 
@@ -34,6 +35,7 @@ public class IdleState : GroundState
         if(stateMachine.MovementInput != Vector2.zero)
         {
             stateMachine.ChangeState(stateMachine.WalkState);
+            return;
         }
     }
 }

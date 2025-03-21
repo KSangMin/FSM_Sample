@@ -29,6 +29,13 @@ public class GroundState : PlayerBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if (!stateMachine.Player.controller.isGrounded
+            && stateMachine.Player.controller.velocity.y < Physics.gravity.y * Time.fixedDeltaTime)
+        {
+            stateMachine.ChangeState(stateMachine.FallState);
+            return;
+        }
     }
 
     protected override void OnMoveCanceled(InputAction.CallbackContext context)

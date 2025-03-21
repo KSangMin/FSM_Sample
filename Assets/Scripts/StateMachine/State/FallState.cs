@@ -19,4 +19,15 @@ public class FallState : AirState
 
         StopAnimation(stateMachine.Player.animationData.FallParameterHash);
     }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (stateMachine.Player.controller.isGrounded)
+        {
+            stateMachine.ChangeState(stateMachine.IdleState);
+            return;
+        }
+    }
 }
