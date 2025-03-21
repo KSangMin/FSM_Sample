@@ -20,12 +20,13 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         stateMachine = new PlayerStateMachine(this);
-        stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     private void Update()
