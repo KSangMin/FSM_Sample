@@ -17,8 +17,6 @@ public class PlayerBaseState : IState
     public virtual void Enter()
     {
         AddInputActionCallbacks();
-
-        Debug.Log(this.GetType());
     }
 
     public virtual void Exit()
