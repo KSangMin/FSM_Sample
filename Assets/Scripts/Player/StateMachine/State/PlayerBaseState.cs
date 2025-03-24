@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerBaseState : IState
 {
     protected PlayerStateMachine stateMachine;
-    protected PlayerController input;
+    protected InputHandler input;
     protected readonly PlayerGroundData groundData;
 
     public PlayerBaseState(PlayerStateMachine stateMachine)

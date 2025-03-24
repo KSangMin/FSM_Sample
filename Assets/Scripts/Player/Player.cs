@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [field:SerializeField] public PlayerAnimationData animationData {  get; private set; }
 
     public Animator animator {  get; private set; }
-    public PlayerController input {  get; private set; }
+    public InputHandler input {  get; private set; }
     public CharacterController controller { get; private set; }
     public ForceReceiver forceReceiver { get; private set; }
 
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     {
         animationData.Init();
         animator = GetComponentInChildren<Animator>();
-        input = GetComponent<PlayerController>();
+        input = GetComponent<InputHandler>();
         controller = GetComponent<CharacterController>();
         forceReceiver = GetComponent<ForceReceiver>();
         health = GetComponent<Health>();
