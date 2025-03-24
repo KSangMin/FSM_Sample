@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -21,9 +22,31 @@ public class PlayerAirData
     [field: SerializeField][field: Range(0f, 25f)] public float JumpForce { get; private set; } = 5f;
 }
 
+[Serializable]
+public class PlayerAttackData
+{
+    [field: SerializeField] public List<AttackInfoData> AttackInfoDatas { get; private set; }
+    public int GetAttackInfoCount() { return AttackInfoDatas.Count; }
+    public AttackInfoData GetAttackInfoData(int index) { return AttackInfoDatas[index]; }
+}
+
+[Serializable]
+public class AttackInfoData
+{
+    [field: SerializeField] public string AttackName { get; private set; }
+    [field: SerializeField] public int ComboStateIndex { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float ComboTransitiontime { get; private set; }
+    [field: SerializeField][field: Range(0f, 3f)] public float ForceTransitiontime { get; private set; }
+    [field: SerializeField][field: Range(-10f, 10f)] public float Force { get; private set; }
+    [field: SerializeField] public int Damage;
+    [field: SerializeField][field: Range(0f, 1f)] public float DealingStartTransitiontime { get; private set; }
+    [field: SerializeField][field: Range(0f, 1f)] public float DealingEndTransitiontime { get; private set; }
+}
+
 [CreateAssetMenu(fileName = "Player", menuName = "Characters/Player")]
 public class PlayerSO : ScriptableObject
 {
     [field: SerializeField] public PlayerGroundData GroundData { get; private set; }
     [field: SerializeField] public PlayerAirData AirData { get; private set; }
+    [field: SerializeField] public PlayerAttackData AttackData { get; private set; }
 }

@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerBaseState : IState
 {
     protected PlayerStateMachine stateMachine;
-    protected readonly PlayerGroundData groundData;
     protected PlayerController input;
+    protected readonly PlayerGroundData groundData;
 
     public PlayerBaseState(PlayerStateMachine stateMachine)
     {
@@ -26,12 +26,29 @@ public class PlayerBaseState : IState
         RemoveInputActionCallbacks();
     }
 
+    public virtual void Update()
+    {
+        Move();
+    }
+
+    public virtual void PhysicsUpdate()
+    {
+        
+    }
+
+    public virtual void HandleInput()
+    {
+        ReadMoveInput();
+    }
+
     protected virtual void AddInputActionCallbacks()
     {
         input.playerActions.Move.canceled += OnMoveCanceled;
         input.playerActions.Run.started += OnRunStarted;
         input.playerActions.Run.canceled += OnRunCanceled;
         input.playerActions.Jump.started += OnJumpStarted;
+        input.playerActions.Attack.performed += OnAttackPerformed;
+        input.playerActions.Attack.canceled += OnAttackCanceled;
     }
 
     protected virtual void RemoveInputActionCallbacks()
@@ -40,21 +57,8 @@ public class PlayerBaseState : IState
         input.playerActions.Run.started -= OnRunStarted;
         input.playerActions.Run.canceled -= OnRunCanceled;
         input.playerActions.Jump.started -= OnJumpStarted;
-    }
-
-    public virtual void HandleInput()
-    {
-        ReadMoveInput();
-    }
-
-    public virtual void PhysicsUpdate()
-    {
-        
-    }
-
-    public virtual void Update()
-    {
-        Move();
+        input.playerActions.Attack.performed -= OnAttackPerformed;
+        input.playerActions.Attack.canceled -= OnAttackCanceled;
     }
 
     protected virtual void OnMoveCanceled(InputAction.CallbackContext context)
@@ -75,6 +79,16 @@ public class PlayerBaseState : IState
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
     {
 
+    }
+
+    protected virtual void OnAttackPerformed(InputAction.CallbackContext context)
+    {
+        stateMachine.IsAttacking = true;
+    }
+
+    protected virtual void OnAttackCanceled(InputAction.CallbackContext context)
+    {
+        stateMachine.IsAttacking = false;
     }
 
     protected void StartAnimation(int animatorHash)
@@ -130,6 +144,30 @@ public class PlayerBaseState : IState
             Transform playerTransform = stateMachine.Player.transform;
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, stateMachine.RotateDamping * Time.deltaTime);
+        }
+    }
+
+    protected void ForceMove()
+    {
+        stateMachine.Player.controller.Move(stateMachine.Player.forceReceiver.Movement * Time.deltaTime);
+    }
+
+    protected float GetNormalizedTime(Animator animator, string tag)
+    {
+        AnimatorStateInfo curInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
+
+        if (animator.IsInTransition(0) && nextInfo.IsTag(tag))
+        {
+            return nextInfo.normalizedTime;
+        }
+        else if(!animator.IsInTransition(0) && curInfo.IsTag(tag))
+        {
+            return curInfo.normalizedTime;
+        }
+        else
+        {
+            return 0f;
         }
     }
 }
