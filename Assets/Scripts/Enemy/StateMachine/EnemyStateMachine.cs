@@ -9,7 +9,7 @@ public class EnemyStateMachine : StateMachine
     public float RotateDamping { get; private set; }
     public float MovementSpeedModifier { get; set; }
 
-    public GameObject Target {  get; private set; }
+    public Health Target {  get; private set; }
 
     public EnemyIdleState IdleState { get; }
     public EnemyChasingState ChasingState { get; }
@@ -22,7 +22,7 @@ public class EnemyStateMachine : StateMachine
         MovementSpeed = enemy.Data.GroundData.BaseSpeed;
         RotateDamping = enemy.Data.GroundData.BaseRotationDamping;
 
-        Target = GameObject.FindGameObjectWithTag("Player");
+        Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
         IdleState = new EnemyIdleState(this);
         ChasingState = new EnemyChasingState(this);

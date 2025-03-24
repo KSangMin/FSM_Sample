@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 
     private EnemyStateMachine stateMachine;
 
+    [field: SerializeField] public Weapon Weapon { get; private set; }
+
     private void Awake()
     {
         animationData.Init();

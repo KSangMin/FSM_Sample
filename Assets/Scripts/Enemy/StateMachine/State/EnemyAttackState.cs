@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyAttackState : EnemyBaseState
 {
     private bool alreadyApplyForce;
+    private bool alreadyAppliedDealing;
 
     public EnemyAttackState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
@@ -16,6 +17,7 @@ public class EnemyAttackState : EnemyBaseState
         StartAnimation(stateMachine.Enemy.animationData.BaseAttackParameterHash);
 
         alreadyApplyForce = false;
+        alreadyAppliedDealing = false;
     }
 
     public override void Exit()
@@ -38,6 +40,18 @@ public class EnemyAttackState : EnemyBaseState
             if (normalizedTime >= stateMachine.Enemy.Data.ForceTransitiontime)
             {
                 TryApplyForce();
+            }
+
+            if(!alreadyAppliedDealing && normalizedTime >= stateMachine.Enemy.Data.DealingStartTransitiontime)
+            {
+                stateMachine.Enemy.Weapon.SetAttack(stateMachine.Enemy.Data.Damage, stateMachine.Enemy.Data.Force);
+                stateMachine.Enemy.Weapon.gameObject.SetActive(true);
+                alreadyAppliedDealing = true;
+            }
+
+            if(alreadyAppliedDealing && normalizedTime >= stateMachine.Enemy.Data.DealingEndTransitiontime)
+            {
+                stateMachine.Enemy.Weapon.gameObject.SetActive(false);
             }
         }
         else
